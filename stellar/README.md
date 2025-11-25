@@ -24,6 +24,12 @@ The Volta contract is a multi-signature governance contract that enables:
 - **Contract invocation**: Ability to call other contracts with proper authorization
 - **Upgrade mechanism**: Contract upgrade capabilities
 
+> **📦 Mainnet Deployment**
+> 
+> **WASM Hash:** `e2b96ebd7dbdb22ff90f3b70bb8a10945fc15571bea0397df284a4cbb9639841`
+> 
+> This is the verified WASM hash for the Volta contract deployed on Stellar mainnet. Use this hash to verify contract integrity when deploying or interacting with the contract.
+
 ## Contract Architecture
 
 ### Key Concepts
