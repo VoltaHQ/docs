@@ -12,6 +12,7 @@ This guide provides comprehensive documentation for integrating with the Volta m
 - [Golang Examples](#golang-examples)
 - [Error Handling](#error-handling)
 - [Events](#events)
+- [Best Practices](#best-practices)
 
 ## Overview
 
@@ -20,15 +21,14 @@ The Volta contract is a multi-signature governance contract that enables:
 - **Multi-owner configuration**: Multiple owners with configurable voting thresholds
 - **Proposal system**: Owners can create proposals for various actions
 - **Voting mechanism**: Owners vote on proposals with configurable thresholds
-- **User rules system**: Granular permission system for non-owners
 - **Contract invocation**: Ability to call other contracts with proper authorization
 - **Upgrade mechanism**: Contract upgrade capabilities
 
-> **📦 Mainnet Deployment**
-> 
-> **WASM Hash:** `e2b96ebd7dbdb22ff90f3b70bb8a10945fc15571bea0397df284a4cbb9639841`
-> 
-> This is the verified WASM hash for the Volta contract deployed on Stellar mainnet. Use this hash to verify contract integrity when deploying or interacting with the contract.
+> **📦 Deployment**
+>
+> **WASM Hash:** `557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c`
+>
+> Use this hash to verify contract integrity when deploying or interacting with the contract.
 
 ## Contract Architecture
 
@@ -37,8 +37,7 @@ The Volta contract is a multi-signature governance contract that enables:
 - **Owners**: Addresses that can create proposals and vote
 - **Threshold**: Minimum number of "Yes" votes required to approve a proposal
 - **Proposals**: Actions that require owner consensus before execution
-- **User Rules**: Granular permissions for non-owners to invoke specific contract functions
-- **Proposal Types**: Config, UserRules, RevokeUserRules, Invoke, Upgrade
+- **Proposal Types**: Config, Invoke, Upgrade
 
 ### Proposal Lifecycle
 
@@ -50,9 +49,9 @@ The Volta contract is a multi-signature governance contract that enables:
 
 ### Limitations
 
-> **⚠️ Auth Tree Depth Limitation**
-> 
-> The contract can only invoke other contracts directly (single hop). If the invoked contract attempts to call a third contract that requires authorization, the execution will fail. Multi-hop contract invocations requiring authorization are not supported. This limitation affects the `invoke()` method and any proposals that execute contract invocations.
+> **⚠️ Authorization for Sub-Calls**
+>
+> When the invoked contract needs to call other contracts that require the Volta contract's authorization, you must provide the appropriate `auth_entries` when calling `invoke()`. The contract will use these entries to authorize itself for the sub-calls. Without proper auth entries, sub-contract invocations requiring authorization will fail.
 
 ## Installation
 
@@ -115,25 +114,12 @@ Creates a new proposal. Only owners can create proposals.
    })
    ```
 
-2. **UserRules**: Grant permissions to a user
-   ```rust
-   ProposalInput::UserRules({
-     user: Address,
-     rules: RuleSet[]
-   })
-   ```
-
-3. **RevokeUserRules**: Remove permissions from a user
-   ```rust
-   ProposalInput::RevokeUserRules(Address)
-   ```
-
-4. **Upgrade**: Upgrade the contract
+2. **Upgrade**: Upgrade the contract
    ```rust
    ProposalInput::Upgrade(BytesN<32>) // WASM hash
    ```
 
-**Note:** `Invoke` proposals cannot be directly created via `propose()`. They are automatically created when owners call `invoke()` without matching user rules.
+**Note:** `Invoke` proposals cannot be directly created via `propose()`. They are created when owners call `invoke()`.
 
 **Errors:**
 - `NotOwner`: Caller is not an owner
@@ -141,10 +127,7 @@ Creates a new proposal. Only owners can create proposals.
 - `InvalidOwners`: Invalid owner configuration (duplicates or < 2 owners)
 - `InvalidThreshold`: Threshold out of valid range
 - `NoConfigChanges`: Config proposal identical to current config
-- `EmptyUserRules`: UserRules proposal contains no rules
-- `DuplicateRulesets`: UserRules proposal contains duplicate rulesets
-- `NoRulesToRevoke`: RevokeUserRules for user with no rules
-- `InvalidUpgrade`: Upgrade hash is all zeros
+- `InvalidUpgrade`: Upgrade hash is invalid (all zeros or all 0xFF)
 
 ---
 
@@ -179,32 +162,45 @@ Votes on a proposal. Only owners can vote.
 
 ---
 
-### `invoke(caller: Address, contract: Address, fn_name: Symbol, args: Vec<Val>) -> ()`
+### `invoke(caller: Address, contract: Address, fn_name: Symbol, args: Vec<Val>, auth_entries: Vec<InvokerContractAuthEntry>) -> ()`
 
-Invokes a function on another contract. Can be called by owners or users with matching rules.
+Creates an Invoke proposal to call a function on another contract. Only owners can call this method.
 
 **Parameters:**
-- `caller: Address`: The caller's address (must match caller)
+- `caller: Address`: The owner's address (must match caller)
 - `contract: Address`: The contract address to invoke
 - `fn_name: Symbol`: The function name to call
 - `args: Vec<Val>`: Arguments to pass to the function
+- `auth_entries: Vec<InvokerContractAuthEntry>`: Authorization entries for sub-contract calls
 
 **Behavior:**
-- If caller has matching user rules: Executes immediately
-- If caller is an owner without matching rules: Creates an Invoke proposal (auto-voted Yes)
-- Otherwise: Returns error
+- Creates an Invoke proposal with the caller's vote automatically set to Yes
+- Requires (threshold - 1) additional Yes votes to execute
+- When approved, the contract authorizes itself using the provided `auth_entries` before invoking
 
 **Returns:**
 - `()`: Success (no return value)
 
 **Errors:**
-- `NotOwner`: Caller is not an owner and has no user rules
-- `RuleNotAllowed`: User rules don't allow this invocation
-- `InvokeError`: Contract invocation failed
+- `NotOwner`: Caller is not an owner
+- `AddressNotOnLedger`: Target contract address doesn't exist on ledger
+- `InvalidFunctionName`: Function name is empty
 
-> **⚠️ Important Limitation: Auth Tree Depth**
-> 
-> This contract can only call another contract directly (single hop). If the invoked contract attempts to call a third contract that requires authorization, the execution will fail. The auth tree cannot extend beyond a single hop - multi-hop contract invocations requiring authorization are not supported.
+---
+
+### `get_proposal(proposal_id: u64) -> Proposal`
+
+Retrieves a proposal by its ID.
+
+**Parameters:**
+- `proposal_id: u64`: The ID of the proposal to retrieve
+
+**Returns:**
+- `Proposal`: The proposal object
+
+**Errors:**
+- `ProposalNotFound`: Proposal doesn't exist
+- `ProposalNotPending`: Proposal was created before the last config change (implicitly invalidated)
 
 ---
 
@@ -390,20 +386,21 @@ async function vote(
 }
 ```
 
-### Invoke Another Contract
+### Create Invoke Proposal
 
 ```typescript
-async function invokeContract(
-  callerKeypair: Keypair,
+async function createInvokeProposal(
+  ownerKeypair: Keypair,
   targetContract: string,
   functionName: string,
-  args: any[]
+  args: any[],
+  authEntries: xdr.SorobanAuthorizationEntry[] = []
 ): Promise<void> {
   const contract = getContract(contractAddress);
-  const callerAddress = Address.fromString(callerKeypair.publicKey());
+  const ownerAddress = Address.fromString(ownerKeypair.publicKey());
   const targetAddress = Address.fromString(targetContract);
-  
-  const sourceAccount = await rpc.getAccount(callerKeypair.publicKey());
+
+  const sourceAccount = await rpc.getAccount(ownerKeypair.publicKey());
   const tx = new TransactionBuilder(sourceAccount, {
     fee: '100',
     networkPassphrase: Networks.TESTNET,
@@ -411,77 +408,19 @@ async function invokeContract(
     .addOperation(
       contract.call(
         'invoke',
-        callerAddress.toScVal(),
+        ownerAddress.toScVal(),
         targetAddress.toScVal(),
         xdr.ScVal.scvSymbol(functionName),
-        args.map(arg => nativeToScVal(arg))
+        xdr.ScVal.scvVec(args.map(arg => nativeToScVal(arg))),
+        xdr.ScVal.scvVec(authEntries)
       )
     )
     .setTimeout(30)
     .build();
-  
-  tx.sign(callerKeypair);
-  
-  await rpc.sendTransaction(tx);
-}
-```
 
-### Create User Rules Proposal
-
-```typescript
-interface Rule {
-  comparator: 'Eq' | 'Gt' | 'Gte' | 'Lt' | 'Lte';
-  value: any; // ValueType
-  field: 'FnName' | 'ContractAddress' | { Arg: number };
-}
-
-interface RuleSet {
-  tag: 'All';
-  values: Rule[][];
-}
-
-async function proposeUserRules(
-  ownerKeypair: Keypair,
-  userAddress: string,
-  rules: RuleSet[]
-): Promise<any> {
-  const contract = getContract(contractAddress);
-  const ownerAddress = Address.fromString(ownerKeypair.publicKey());
-  
-  const proposalInput = {
-    tag: 'UserRules',
-    values: [
-      {
-        user: Address.fromString(userAddress).toScVal(),
-        rules: rules.map(ruleSet => ({
-          tag: ruleSet.tag,
-          values: ruleSet.values.map(rule => ({
-            comparator: rule.comparator,
-            value: nativeToScVal(rule.value),
-            field: typeof rule.field === 'string' 
-              ? { tag: rule.field }
-              : rule.field,
-          })),
-        })),
-      },
-    ],
-  };
-  
-  const sourceAccount = await rpc.getAccount(ownerKeypair.publicKey());
-  const tx = new TransactionBuilder(sourceAccount, {
-    fee: '100',
-    networkPassphrase: Networks.TESTNET,
-  })
-    .addOperation(contract.call('propose', ownerAddress.toScVal(), proposalInput))
-    .setTimeout(30)
-    .build();
-  
   tx.sign(ownerKeypair);
-  
-  const response = await rpc.sendTransaction(tx);
-  const result = await rpc.getTransaction(response.hash);
-  
-  return scValToNative(result.returnValue);
+
+  await rpc.sendTransaction(tx);
 }
 ```
 
@@ -787,36 +726,43 @@ func vote(
 }
 ```
 
-### Invoke Another Contract
+### Create Invoke Proposal
 
 ```go
-func invokeContract(
+func createInvokeProposal(
     sourceAccount txnbuild.Account,
-    callerKP *keypair.Full,
+    ownerKP *keypair.Full,
     targetContract string,
     functionName string,
     args []xdr.ScVal,
+    authEntries []xdr.SorobanAuthorizationEntry,
 ) error {
-    callerAddr, err := xdr.AddressToScVal(callerKP.Address())
+    ownerAddr, err := xdr.AddressToScVal(ownerKP.Address())
     if err != nil {
         return err
     }
-    
+
     targetAddr, err := xdr.AddressToScVal(targetContract)
     if err != nil {
         return err
     }
-    
+
     fnNameScVal := xdr.ScVal{
         Type:   xdr.ScValTypeScvSymbol,
         Symbol: &xdr.ScSymbol(functionName),
     }
-    
+
     argsVec := xdr.ScVal{
         Type: xdr.ScValTypeScvVec,
         Vec:  &xdr.ScVec{Elements: args},
     }
-    
+
+    // Convert auth entries to ScVal
+    authEntriesVec := xdr.ScVal{
+        Type: xdr.ScValTypeScvVec,
+        Vec:  &xdr.ScVec{Elements: []xdr.ScVal{}}, // Populate as needed
+    }
+
     op := &txnbuild.InvokeHostFunction{
         HostFunction: xdr.HostFunction{
             Type: xdr.HostFunctionTypeHostFunctionTypeInvokeContract,
@@ -824,15 +770,16 @@ func invokeContract(
                 ContractAddress: contractAddress,
                 FunctionName:    "invoke",
                 Args: []xdr.ScVal{
-                    callerAddr,
+                    ownerAddr,
                     targetAddr,
                     fnNameScVal,
                     argsVec,
+                    authEntriesVec,
                 },
             },
         },
     }
-    
+
     tx, err := txnbuild.NewTransaction(
         txnbuild.TransactionParams{
             SourceAccount:        sourceAccount,
@@ -845,15 +792,15 @@ func invokeContract(
     if err != nil {
         return err
     }
-    
-    tx, err = tx.Sign(network.TestNetworkPassphrase, callerKP)
+
+    tx, err = tx.Sign(network.TestNetworkPassphrase, ownerKP)
     if err != nil {
         return err
     }
-    
+
     // Submit transaction
     // ... (transaction submission logic)
-    
+
     return nil
 }
 ```
@@ -929,16 +876,12 @@ The contract uses the following error codes:
 | 10 | `VoterAlreadyVoted` | Owner has already voted |
 | 11 | `ProposalNotPending` | Proposal is not in pending status |
 | 12 | `InvokeError` | Contract invocation failed |
-| 13 | `NotUser` | User has no rules configured |
 | 14 | `NoConfigChanges` | Config proposal identical to current config |
 | 15 | `NotCaller` | Caller is not the proposal creator |
-| 18 | `RuleNotAllowed` | User rules don't allow this invocation |
 | 19 | `InvokeNotAllowed` | Cannot directly propose Invoke proposals |
-| 20 | `EmptyUserRules` | UserRules proposal contains no rules |
-| 21 | `NoRulesToRevoke` | RevokeUserRules for user with no rules |
 | 22 | `InvalidUpgrade` | Upgrade hash is invalid |
-| 23 | `InvalidInvoke` | Invalid invoke call structure |
-| 24 | `DuplicateRulesets` | UserRules proposal contains duplicate rulesets |
+| 23 | `AddressNotOnLedger` | Target contract address doesn't exist on ledger |
+| 24 | `InvalidFunctionName` | Function name is empty |
 
 ## Events
 
@@ -950,9 +893,9 @@ The contract emits the following events:
 - `exec_prop`: Emitted when a proposal is executed
 - `rev_prop`: Emitted when a proposal is revoked
 - `cfg_set`: Emitted when configuration is updated
-- `rules_set`: Emitted when user rules are set
-- `rules_rm`: Emitted when user rules are removed
 - `inv_ok`: Emitted when a contract invocation succeeds
+- `inv_err`: Emitted when invoke result conversion fails
+- `vote`: Emitted when a vote is cast
 
 ### Listening to Events
 
@@ -979,64 +922,13 @@ const eventStream = rpc.subscribe({
 // Query transactions for the contract address to retrieve events
 ```
 
-## User Rules System
-
-The user rules system allows non-owners to invoke specific contract functions based on granular rules.
-
-### Rule Structure
-
-A rule consists of:
-- **Comparator**: `Eq`, `Gt`, `Gte`, `Lt`, `Lte`
-- **Value**: The value to compare against (supports u32, i32, u64, i64, u128, i128, bool, Address, Symbol)
-- **Field**: What to compare (`FnName`, `ContractAddress`, or `Arg(index)`)
-
-### RuleSet Structure
-
-A RuleSet contains multiple rules that must ALL pass (AND logic):
-- `RuleSet::All(Vec<Rule>)`: All rules in the set must match
-
-### Example: Allow Transfer Function
-
-```typescript
-const rules: RuleSet[] = [
-  {
-    tag: 'All',
-    values: [
-      [
-        {
-          comparator: 'Eq',
-          value: 'transfer',
-          field: 'FnName',
-        },
-        {
-          comparator: 'Eq',
-          value: targetContractAddress,
-          field: 'ContractAddress',
-        },
-        {
-          comparator: 'Lte',
-          value: 10000000,
-          field: { Arg: 0 },
-        },
-      ],
-    ],
-  },
-];
-```
-
-This rule allows:
-- Calling the `transfer` function
-- On a specific contract address
-- With the first argument <= 10000000
-
 ## Best Practices
 
 1. **Always check proposal status** before voting or executing
 2. **Validate thresholds** ensure they're between 2 and owner count
 3. **Handle errors gracefully** check error codes and provide user feedback
 4. **Monitor events** for proposal lifecycle changes
-5. **Use user rules** for granular permissions instead of making everyone an owner
-6. **Test thoroughly** before deploying to mainnet
+5. **Test thoroughly** before deploying to mainnet
 
 ## Additional Resources
 
