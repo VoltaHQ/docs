@@ -4,22 +4,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-This is a documentation repository for Volta, containing integration guides and API documentation. There is no build system, tests, or application code - only Markdown documentation files.
+This is a documentation repository for Volta, containing integration guides and API documentation for Stellar/Soroban. There is no build system, tests, or application code - only Markdown documentation files and TypeScript examples.
 
 ## Structure
 
 - `stellar/` - Soroban smart contract integration documentation
-  - `README.md` - Comprehensive guide for integrating with the Volta multi-signature governance contract on Stellar's Soroban platform
+  - `README.md` - Complete API reference with TypeScript and Go code examples
+  - `troubleshooting.md` - Error codes and common issues
+  - `tutorials/` - Step-by-step guides (getting-started, first-proposal, integration)
+  - `examples/typescript/` - Runnable TypeScript example project
 
 ## Volta Contract Overview
 
-The documentation covers a multi-signature governance smart contract with:
-- Multi-owner configuration with voting thresholds
-- Proposal system (Config, Invoke, Upgrade)
-- TypeScript/JavaScript and Golang integration examples
+The documentation covers a multi-signature governance contract (M-of-N voting) with:
+- Multi-owner configuration with configurable voting thresholds (minimum 2 owners, threshold 2 to N)
+- Proposal system: Config (change owners/threshold), Invoke (call other contracts), Upgrade (contract upgrades)
+- Proposal lifecycle: Pending → Approved/Rejected/Revoked → Executed (with ~1 week TTL)
 
-**WASM Hash:** `557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c`
+**Mainnet WASM Hash:** `557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c`
 
 ## Key Technical Constraints
 
-When working with Volta contract documentation, note that the `invoke()` method requires `auth_entries` to be provided for sub-contract calls that need the Volta contract's authorization.
+- The `invoke()` method requires `auth_entries` to be provided for sub-contract calls that need the Volta contract's authorization
+- Invoke proposals auto-count the creator's vote as Yes, requiring only `threshold - 1` additional votes
+- Config and Upgrade proposal execution invalidates all pending proposals
+- Cannot use `propose()` to create Invoke proposals - must use `invoke()` directly
