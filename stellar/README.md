@@ -14,6 +14,15 @@ This guide provides comprehensive documentation for integrating with the Volta m
 - [Events](#events)
 - [Best Practices](#best-practices)
 
+## Tutorials & Guides
+
+New to Volta? Start here:
+
+- **[Getting Started](./tutorials/getting-started.md)** - Deploy and initialize your first Volta contract
+- **[Creating Your First Proposal](./tutorials/first-proposal.md)** - Step-by-step guide to creating and voting on proposals
+- **[dApp Integration](./tutorials/integration.md)** - Integrate Volta into your application with TypeScript examples
+- **[Troubleshooting](./troubleshooting.md)** - Common errors and solutions
+
 ## Overview
 
 The Volta contract is a multi-signature governance contract that enables:
