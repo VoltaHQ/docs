@@ -39,7 +39,7 @@ Created → Pending → Approved → Executed
 
 ## Step 1: Deploy the Contract
 
-The current WASM hash is: `557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c`
+The current WASM hash is: `ce84b965f3fdbf4ff9ea4c28813a7a30d6dd65c69d0d1bc19834d907a5e0d27b`
 
 ```bash
 # Upload the WASM (if not already uploaded)
@@ -50,7 +50,7 @@ stellar contract upload \
 
 # Deploy the contract
 stellar contract deploy \
-  --wasm-hash 557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c \
+  --wasm-hash ce84b965f3fdbf4ff9ea4c28813a7a30d6dd65c69d0d1bc19834d907a5e0d27b \
   --source <YOUR_SOURCE_ACCOUNT> \
   --network testnet
 ```

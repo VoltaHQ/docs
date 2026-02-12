@@ -21,7 +21,7 @@ The documentation covers a multi-signature governance contract (M-of-N voting) w
 - Proposal system: Config (change owners/threshold), Invoke (call other contracts), Upgrade (contract upgrades)
 - Proposal lifecycle: Pending → Approved/Rejected/Revoked → Executed (with ~1 week TTL)
 
-**Mainnet WASM Hash:** `557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c`
+**Mainnet WASM Hash:** `ce84b965f3fdbf4ff9ea4c28813a7a30d6dd65c69d0d1bc19834d907a5e0d27b`
 
 ## Key Technical Constraints
 

@@ -4,7 +4,7 @@
  * Minimal example demonstrating how to interact with the Volta multi-signature
  * governance contract on Soroban. Based on patterns from web-circuit.
  *
- * WASM Hash: 557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c
+ * WASM Hash: ce84b965f3fdbf4ff9ea4c28813a7a30d6dd65c69d0d1bc19834d907a5e0d27b
  */
 
 import {
@@ -41,7 +41,7 @@ const CONFIG = {
 
 // Mainnet WASM hash for the Volta contract
 const WASM_HASH =
-  "557c34220a7ecc4a7abf9e1762adefb69adda14e31a34f27b6c0d4edb10ef64c";
+  "ce84b965f3fdbf4ff9ea4c28813a7a30d6dd65c69d0d1bc19834d907a5e0d27b";
 
 // Dummy account for read-only simulations (no real account needed)
 const DUMMY_ACCOUNT = new Account(
