@@ -943,4 +943,3 @@ const eventStream = rpc.subscribe({
 
 - [Soroban Documentation](https://soroban.stellar.org/docs)
 - [Stellar SDK Documentation](https://developers.stellar.org/docs)
-- [Contract Source Code](../../smart-contract-soroban)

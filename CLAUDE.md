@@ -4,15 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-This is a documentation repository for Volta, containing integration guides and API documentation for Stellar/Soroban. There is no build system, tests, or application code - only Markdown documentation files and TypeScript examples.
+This is a documentation repository for Volta, built with MkDocs (Material theme) and deployed to GitHub Pages. Contains integration guides and API documentation for Stellar/Soroban.
+
+## Build
+
+- `make serve` - Local dev server
+- `make build` - Build static site to `site/`
+- Deploys automatically to GitHub Pages on push to `master` via `.github/workflows/deploy.yml`
 
 ## Structure
 
-- `stellar/` - Soroban smart contract integration documentation
-  - `README.md` - Complete API reference with TypeScript and Go code examples
-  - `troubleshooting.md` - Error codes and common issues
-  - `tutorials/` - Step-by-step guides (getting-started, first-proposal, integration)
-  - `examples/typescript/` - Runnable TypeScript example project
+- `docs/` - MkDocs source (Markdown documentation)
+  - `index.md` - Top-level landing page
+  - `stellar/` - Soroban smart contract integration docs
+    - `index.md` - API reference with TypeScript and Go examples
+    - `troubleshooting.md` - Error codes and common issues
+    - `tutorials/` - Step-by-step guides (getting-started, first-proposal, integration)
+- `mkdocs.yml` - MkDocs configuration
 
 ## Volta Contract Overview
 
