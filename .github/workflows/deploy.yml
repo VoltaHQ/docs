@@ -1,0 +1,19 @@
+name: Deploy docs to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - run: uvx --with 'mkdocs>=1.6,<2' --with 'mkdocs-material>=9.5,<9.6' mkdocs gh-deploy --force

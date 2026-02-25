@@ -338,5 +338,5 @@ function handleContractError(error: any) {
 
 ## Next Steps
 
-- [API Reference](../README.md)
+- [API Reference](../index.md)
 - [Troubleshooting Guide](../troubleshooting.md)
