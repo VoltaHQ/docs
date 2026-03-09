@@ -51,7 +51,7 @@ nav:
       - Getting Started: evm/tutorials/getting-started.md
       - Session Keys: evm/tutorials/session-keys.md
     - Troubleshooting: evm/troubleshooting.md
-  - CosmWasm (Sei/Injective):
+  - CosmWasm:
     - Overview: cosmwasm/index.md
     - Tutorials:
       - Getting Started: cosmwasm/tutorials/getting-started.md

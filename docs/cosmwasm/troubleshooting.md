@@ -1,6 +1,6 @@
 # Volta CosmWasm Troubleshooting Guide
 
-This guide covers common errors and issues when working with the Volta CosmWasm contract on Sei and Injective.
+This guide covers common errors and issues when working with the Volta CosmWasm contract on CosmWasm-compatible chains.
 
 ## Contract Errors
 
@@ -61,7 +61,7 @@ This guide covers common errors and issues when working with the Volta CosmWasm 
 
 **Cause:** An address failed chain-specific validation (e.g., invalid bech32 encoding).
 
-**Solution:** Verify the address is valid for your chain (e.g., `sei1...` for Sei, `inj1...` for Injective).
+**Solution:** Verify the address is valid for your chain (e.g., `inj1...` for Injective).
 
 ---
 
@@ -79,8 +79,7 @@ This guide covers common errors and issues when working with the Volta CosmWasm 
 
 **Cause:** `periodic_fee_grant.amount` is set to zero.
 
-**Solution:** Provide a non-zero amount for the periodic fee grant. Default values are approximately $4,000 USD equivalent:
-- Sei: `14000000000` usei
+**Solution:** Provide a non-zero amount for the periodic fee grant. Default value is approximately $4,000 USD equivalent:
 - Injective: `227000000000000000000` inj
 
 ---
@@ -108,7 +107,7 @@ This guide covers common errors and issues when working with the Volta CosmWasm 
 **Solution:** Query proposals to check the current state:
 
 ```bash
-seid query wasm contract-state smart <CONTRACT> '{"get_proposals":{"filter":"all"}}'
+injectived query wasm contract-state smart <CONTRACT> '{"get_proposals":{"filter":"all"}}'
 ```
 
 If the proposal was superseded, a newer proposal of the same type has replaced it.

@@ -1,6 +1,6 @@
 # Volta CosmWasm Smart Contract Integration Guide
 
-This guide provides comprehensive documentation for integrating with the Volta multi-signature governance contract deployed on CosmWasm-compatible chains (Sei, Injective).
+This guide provides comprehensive documentation for integrating with the Volta multi-signature governance contract deployed on CosmWasm-compatible chains. The primary deployment target is Injective, but the contract works on any CosmWasm-compatible chain.
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@ The Volta CosmWasm contract is a multi-signature governance wallet that enables:
 - **Proposal system**: Actions that fail rules or require governance go through M-of-N owner voting
 - **Fee grants**: Automatic periodic fee grants for owners and authorized users (gas sponsorship)
 - **Nominal daily limits**: Per-user daily spending caps on bank transfers
-- **Multi-chain support**: Compiles for Sei and Injective via feature flags
+- **Multi-chain support**: Works on any CosmWasm-compatible chain, with Injective as the primary deployment
 
 > **Key Design Note**
 >
@@ -68,15 +68,15 @@ Initializes the contract with owners and configuration.
 ```json
 {
   "config": {
-    "admin": "sei1admin...",
+    "admin": "inj1admin...",
     "m": 2,
     "max_proposal_size": 32,
     "periodic_fee_grant": {
-      "denom": "usei",
-      "amount": "14000000000"
+      "denom": "inj",
+      "amount": "227000000000000000000"
     }
   },
-  "owners": ["sei1owner1...", "sei1owner2...", "sei1owner3..."]
+  "owners": ["inj1owner1...", "inj1owner2...", "inj1owner3..."]
 }
 ```
 
@@ -107,8 +107,8 @@ Sends a Cosmos SDK message through the wallet. Available to the admin, owners, a
   "cosmos_msg": {
     "bank": {
       "send": {
-        "to_address": "sei1recipient...",
-        "amount": [{"denom": "usei", "amount": "1000000"}]
+        "to_address": "inj1recipient...",
+        "amount": [{"denom": "inj", "amount": "1000000"}]
       }
     }
   }
@@ -142,7 +142,7 @@ Creates a proposal. **Admin only.**
   "propose": {
     "proposal": {
       "rules": {
-        "addr": "sei1user...",
+        "addr": "inj1user...",
         "user_rules": {
           "rules": [
             {
@@ -151,13 +151,13 @@ Creates a proposal. **Admin only.**
                   "field": "bank.send.to_address",
                   "data_type": "string",
                   "comparer": "eq",
-                  "value": "sei1allowed..."
+                  "value": "inj1allowed..."
                 }
               ]
             }
           ],
           "nominal_limits": {
-            "usei": "1000000000"
+            "inj": "1000000000"
           }
         }
       }
@@ -221,9 +221,9 @@ Retrieves proposals by filter.
 [
   {
     "id": 1,
-    "initiator": "sei1admin...",
-    "addr": "sei1user...",
-    "target": { "rules": { "addr": "sei1user...", "user_rules": { ... } } },
+    "initiator": "inj1admin...",
+    "addr": "inj1user...",
+    "target": { "rules": { "addr": "inj1user...", "user_rules": { ... } } },
     "state": "open",
     "yes": 0,
     "no": 0,
@@ -245,8 +245,8 @@ A Cosmos message like:
 {
   "bank": {
     "send": {
-      "to_address": "sei1abc...",
-      "amount": [{"denom": "usei", "amount": "1000"}]
+      "to_address": "inj1abc...",
+      "amount": [{"denom": "inj", "amount": "1000"}]
     }
   }
 }
@@ -254,15 +254,15 @@ A Cosmos message like:
 
 Becomes a flat map:
 ```
-"bank.send.to_address" → "sei1abc..."
-"bank.send.amount.denom" → "usei"
+"bank.send.to_address" → "inj1abc..."
+"bank.send.amount.denom" → "inj"
 "bank.send.amount.amount" → "1000"
 ```
 
 For `WasmMsg::Execute`, the inner contract message is decoded and flattened with the prefix `wasm.execute`:
 ```
-"wasm.execute.contract_addr" → "sei1contract..."
-"wasm.execute.swap.input_token" → "usei"
+"wasm.execute.contract_addr" → "inj1contract..."
+"wasm.execute.swap.input_token" → "inj"
 "wasm.execute.swap.min_output" → "1000"
 ```
 
@@ -281,7 +281,7 @@ A `RuleSet::All(rules)` passes only if **all** rules in the set match (AND logic
   "field": "bank.send.to_address",
   "data_type": "string",
   "comparer": "eq",
-  "value": "sei1allowed..."
+  "value": "inj1allowed..."
 }
 ```
 
@@ -310,7 +310,7 @@ If a user has `nominal_limits` set, bank sends are tracked per-denom per-day. If
 ```json
 {
   "nominal_limits": {
-    "usei": "1000000000",
+    "inj": "1000000000",
     "usdc": "500000000"
   }
 }
@@ -324,16 +324,16 @@ If a user has `nominal_limits` set, bank sends are tracked per-denom per-day. If
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { GasPrice } from '@cosmjs/stargate';
 
-const rpcEndpoint = 'https://rpc.sei-testnet.example.com';
-const contractAddress = 'sei1contract...';
+const rpcEndpoint = 'https://rpc.injective-testnet.example.com';
+const contractAddress = 'inj1contract...';
 
 async function getClient(mnemonic: string) {
   const { DirectSecp256k1HdWallet } = await import('@cosmjs/proto-signing');
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
-    prefix: 'sei',
+    prefix: 'inj',
   });
   return SigningCosmWasmClient.connectWithSigner(rpcEndpoint, wallet, {
-    gasPrice: GasPrice.fromString('0.01usei'),
+    gasPrice: GasPrice.fromString('500000000inj'),
   });
 }
 ```
@@ -429,17 +429,17 @@ async function proposeRules(
   return client.execute(adminAddress, contractAddress, msg, 'auto');
 }
 
-// Example: allow user to send usei to a specific address, max 1000 SEI/day
+// Example: allow user to send inj to a specific address, max 1000 INJ/day
 await proposeRules(client, adminAddress, userAddress, [
   [
     {
       field: 'bank.send.to_address',
       data_type: 'string',
       comparer: 'eq',
-      value: 'sei1allowed...',
+      value: 'inj1allowed...',
     },
   ],
-], { usei: '1000000000' });
+], { inj: '1000000000' });
 ```
 
 ### Vote on a Proposal
@@ -570,5 +570,4 @@ async function proposeRevokeAllRules(
 ## Additional Resources
 
 - [CosmWasm Documentation](https://docs.cosmwasm.com/)
-- [Sei Documentation](https://docs.sei.io/)
 - [Injective Documentation](https://docs.injective.network/)

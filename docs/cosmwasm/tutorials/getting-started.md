@@ -1,10 +1,10 @@
 # Getting Started with Volta on CosmWasm
 
-Volta on CosmWasm is a multi-signature governance wallet for Sei and Injective that enables M-of-N owner voting, a rules engine for delegated user access, and automatic fee grants.
+Volta on CosmWasm is a multi-signature governance wallet for CosmWasm-compatible chains that enables M-of-N owner voting, a rules engine for delegated user access, and automatic fee grants. The primary deployment target is Injective.
 
 ## Prerequisites
 
-- A funded wallet on your target chain (Sei testnet or Injective testnet)
+- A funded wallet on your target chain (e.g., Injective testnet)
 - [CosmWasm CLI tools](https://docs.cosmwasm.com/) or a client library like `@cosmjs/cosmwasm-stargate`
 - Basic familiarity with CosmWasm contracts and Cosmos SDK messages
 
@@ -52,10 +52,7 @@ Open → Passed → Executed (action applied)
 # Clone the repository
 cd smart-contract-cosmwasm
 
-# Build with the appropriate feature flag
-# For Sei:
-cargo build --release --target wasm32-unknown-unknown --features sei
-
+# Build with the appropriate feature flag for your target chain
 # For Injective:
 cargo build --release --target wasm32-unknown-unknown --features injective
 
@@ -70,27 +67,27 @@ docker run --rm -v "$(pwd)":/code \
 
 ```bash
 # Upload the WASM
-seid tx wasm store artifacts/volta.wasm \
+injectived tx wasm store artifacts/volta.wasm \
   --from <YOUR_KEY> \
   --chain-id <CHAIN_ID> \
   --gas auto \
   --gas-adjustment 1.3 \
-  --fees 10000usei
+  --fees 500000000000000inj
 
 # Note the code_id from the response
 
 # Instantiate
-seid tx wasm instantiate <CODE_ID> '{
+injectived tx wasm instantiate <CODE_ID> '{
   "config": {
-    "admin": "sei1admin...",
+    "admin": "inj1admin...",
     "m": 2,
     "max_proposal_size": 32,
     "periodic_fee_grant": {
-      "denom": "usei",
-      "amount": "14000000000"
+      "denom": "inj",
+      "amount": "227000000000000000000"
     }
   },
-  "owners": ["sei1owner1...", "sei1owner2..."]
+  "owners": ["inj1owner1...", "inj1owner2..."]
 }' \
   --label "volta-wallet" \
   --from <YOUR_KEY> \
@@ -98,7 +95,7 @@ seid tx wasm instantiate <CODE_ID> '{
   --chain-id <CHAIN_ID> \
   --gas auto \
   --gas-adjustment 1.3 \
-  --fees 10000usei
+  --fees 500000000000000inj
 ```
 
 **Requirements:**
@@ -113,7 +110,7 @@ seid tx wasm instantiate <CODE_ID> '{
 Query proposals to verify the contract is working:
 
 ```bash
-seid query wasm contract-state smart <CONTRACT_ADDRESS> '{
+injectived query wasm contract-state smart <CONTRACT_ADDRESS> '{
   "get_proposals": { "filter": "all" }
 }'
 ```
@@ -128,10 +125,10 @@ Expected response (empty list for a fresh contract):
 Send tokens to the contract address so it can issue fee grants and fund user transactions:
 
 ```bash
-seid tx bank send <YOUR_KEY> <CONTRACT_ADDRESS> 1000000000usei \
+injectived tx bank send <YOUR_KEY> <CONTRACT_ADDRESS> 1000000000inj \
   --chain-id <CHAIN_ID> \
   --gas auto \
-  --fees 10000usei
+  --fees 500000000000000inj
 ```
 
 ## Step 4: Test a Transaction
@@ -139,12 +136,12 @@ seid tx bank send <YOUR_KEY> <CONTRACT_ADDRESS> 1000000000usei \
 As an owner, try sending tokens through the wallet. Since owners don't have rules, this will create a CosmosMsgs proposal:
 
 ```bash
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "cosmos_msg": {
     "bank": {
       "send": {
-        "to_address": "sei1recipient...",
-        "amount": [{"denom": "usei", "amount": "1000000"}]
+        "to_address": "inj1recipient...",
+        "amount": [{"denom": "inj", "amount": "1000000"}]
       }
     }
   }
@@ -152,7 +149,7 @@ seid tx wasm execute <CONTRACT_ADDRESS> '{
   --from <OWNER_KEY> \
   --chain-id <CHAIN_ID> \
   --gas auto \
-  --fees 10000usei
+  --fees 500000000000000inj
 ```
 
 Check the transaction attributes for `proposal_id` and `allowed=false`, confirming the message was queued as a proposal.
@@ -162,7 +159,7 @@ Check the transaction attributes for `proposal_id` and `allowed=false`, confirmi
 The second owner votes Yes to meet the threshold:
 
 ```bash
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "vote": {
     "proposal_id": 1,
     "vote": "yes"
@@ -171,7 +168,7 @@ seid tx wasm execute <CONTRACT_ADDRESS> '{
   --from <OWNER2_KEY> \
   --chain-id <CHAIN_ID> \
   --gas auto \
-  --fees 10000usei
+  --fees 500000000000000inj
 ```
 
 With 2 Yes votes (the proposing owner's auto-vote + this one), the proposal passes and the bank send is executed.

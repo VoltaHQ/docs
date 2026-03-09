@@ -26,8 +26,8 @@ Before rules are evaluated, the Cosmos message is serialized to JSON and flatten
 {
   "bank": {
     "send": {
-      "to_address": "sei1abc...",
-      "amount": [{"denom": "usei", "amount": "5000000"}]
+      "to_address": "inj1abc...",
+      "amount": [{"denom": "inj", "amount": "5000000"}]
     }
   }
 }
@@ -35,16 +35,16 @@ Before rules are evaluated, the Cosmos message is serialized to JSON and flatten
 
 **Flattened:**
 ```
-"bank.send.to_address"    → "sei1abc..."
-"bank.send.amount.denom"  → "usei"
+"bank.send.to_address"    → "inj1abc..."
+"bank.send.amount.denom"  → "inj"
 "bank.send.amount.amount" → "5000000"
 ```
 
 **Wasm execute messages** get the inner JSON decoded and flattened with a prefix:
 ```
-"wasm.execute.contract_addr"          → "sei1contract..."
-"wasm.execute.funds.denom"            → "usei"
-"wasm.execute.swap.input_denom"       → "usei"
+"wasm.execute.contract_addr"          → "inj1contract..."
+"wasm.execute.funds.denom"            → "inj"
+"wasm.execute.swap.input_denom"       → "inj"
 "wasm.execute.swap.min_output_amount" → "1000"
 ```
 
@@ -61,7 +61,7 @@ Before rules are evaluated, the Cosmos message is serialized to JSON and flatten
     { "all": [ ...rules... ] }
   ],
   "nominal_limits": {
-    "usei": "1000000000"
+    "inj": "1000000000"
   }
 }
 ```
@@ -84,7 +84,7 @@ Currently only `All` is supported — all rules in the set must match (AND logic
   "field": "bank.send.to_address",
   "data_type": "string",
   "comparer": "eq",
-  "value": "sei1allowed..."
+  "value": "inj1allowed..."
 }
 ```
 
@@ -108,7 +108,7 @@ Currently only `All` is supported — all rules in the set must match (AND logic
 
 ### Scenario 1: Allow Bank Sends to a Specific Address
 
-Allow a user to send usei to a specific recipient, with a daily limit of 1000 SEI:
+Allow a user to send inj to a specific recipient, with a daily limit of 1000 INJ:
 
 ```typescript
 const rules = [
@@ -118,19 +118,19 @@ const rules = [
         field: 'bank.send.to_address',
         data_type: 'string',
         comparer: 'eq',
-        value: 'sei1allowed...',
+        value: 'inj1allowed...',
       },
       {
         field: 'bank.send.amount.denom',
         data_type: 'string',
         comparer: 'eq',
-        value: 'usei',
+        value: 'inj',
       },
     ],
   },
 ];
 
-const nominalLimits = { usei: '1000000000' }; // 1000 SEI
+const nominalLimits = { inj: '1000000000' }; // 1000 INJ
 ```
 
 ### Scenario 2: Allow Wasm Contract Execution
@@ -145,7 +145,7 @@ const rules = [
         field: 'wasm.execute.contract_addr',
         data_type: 'string',
         comparer: 'eq',
-        value: 'sei1dex_contract...',
+        value: 'inj1dex_contract...',
       },
     ],
   },
@@ -164,7 +164,7 @@ const rules = [
         field: 'wasm.execute.contract_addr',
         data_type: 'string',
         comparer: 'eq',
-        value: 'sei1dex...',
+        value: 'inj1dex...',
       },
       {
         field: 'wasm.execute.swap.input_amount',
@@ -186,15 +186,15 @@ const rules = [
   // Rule set 1: send to Alice
   {
     all: [
-      { field: 'bank.send.to_address', data_type: 'string', comparer: 'eq', value: 'sei1alice...' },
-      { field: 'bank.send.amount.denom', data_type: 'string', comparer: 'eq', value: 'usei' },
+      { field: 'bank.send.to_address', data_type: 'string', comparer: 'eq', value: 'inj1alice...' },
+      { field: 'bank.send.amount.denom', data_type: 'string', comparer: 'eq', value: 'inj' },
     ],
   },
   // Rule set 2: send to Bob
   {
     all: [
-      { field: 'bank.send.to_address', data_type: 'string', comparer: 'eq', value: 'sei1bob...' },
-      { field: 'bank.send.amount.denom', data_type: 'string', comparer: 'eq', value: 'usei' },
+      { field: 'bank.send.to_address', data_type: 'string', comparer: 'eq', value: 'inj1bob...' },
+      { field: 'bank.send.amount.denom', data_type: 'string', comparer: 'eq', value: 'inj' },
     ],
   },
 ];
@@ -230,11 +230,11 @@ const rules = [
 ### Step 1: Admin Proposes Rules
 
 ```bash
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "propose": {
     "proposal": {
       "rules": {
-        "addr": "sei1user...",
+        "addr": "inj1user...",
         "user_rules": {
           "rules": [
             {
@@ -243,13 +243,13 @@ seid tx wasm execute <CONTRACT_ADDRESS> '{
                   "field": "bank.send.to_address",
                   "data_type": "string",
                   "comparer": "eq",
-                  "value": "sei1allowed..."
+                  "value": "inj1allowed..."
                 }
               ]
             }
           ],
           "nominal_limits": {
-            "usei": "1000000000"
+            "inj": "1000000000"
           }
         }
       }
@@ -259,21 +259,21 @@ seid tx wasm execute <CONTRACT_ADDRESS> '{
   --from <ADMIN_KEY> \
   --chain-id <CHAIN_ID> \
   --gas auto \
-  --fees 10000usei
+  --fees 500000000000000inj
 ```
 
 ### Step 2: Owners Vote
 
 ```bash
 # Owner 1 votes
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "vote": { "proposal_id": 1, "vote": "yes" }
-}' --from <OWNER1_KEY> --chain-id <CHAIN_ID> --gas auto --fees 10000usei
+}' --from <OWNER1_KEY> --chain-id <CHAIN_ID> --gas auto --fees 500000000000000inj
 
 # Owner 2 votes (meets threshold for m=2)
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "vote": { "proposal_id": 1, "vote": "yes" }
-}' --from <OWNER2_KEY> --chain-id <CHAIN_ID> --gas auto --fees 10000usei
+}' --from <OWNER2_KEY> --chain-id <CHAIN_ID> --gas auto --fees 500000000000000inj
 ```
 
 ### Step 3: User Executes Messages
@@ -281,16 +281,16 @@ seid tx wasm execute <CONTRACT_ADDRESS> '{
 Once the Rules proposal passes, the user can execute allowed messages:
 
 ```bash
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "cosmos_msg": {
     "bank": {
       "send": {
-        "to_address": "sei1allowed...",
-        "amount": [{"denom": "usei", "amount": "500000000"}]
+        "to_address": "inj1allowed...",
+        "amount": [{"denom": "inj", "amount": "500000000"}]
       }
     }
   }
-}' --from <USER_KEY> --chain-id <CHAIN_ID> --gas auto --fees 10000usei
+}' --from <USER_KEY> --chain-id <CHAIN_ID> --gas auto --fees 500000000000000inj
 ```
 
 The transaction attributes will show `allowed=true` confirming the rules passed.
@@ -300,13 +300,13 @@ The transaction attributes will show `allowed=true` confirming the rules passed.
 ### Revoke Rules for One User
 
 ```bash
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "propose": {
     "proposal": {
-      "revoke_rules": { "addr": "sei1user..." }
+      "revoke_rules": { "addr": "inj1user..." }
     }
   }
-}' --from <ADMIN_KEY> --chain-id <CHAIN_ID> --gas auto --fees 10000usei
+}' --from <ADMIN_KEY> --chain-id <CHAIN_ID> --gas auto --fees 500000000000000inj
 
 # Owners vote to approve...
 ```
@@ -316,13 +316,13 @@ When passed, the user's rules are removed and their fee grant is revoked (unless
 ### Revoke All Rules
 
 ```bash
-seid tx wasm execute <CONTRACT_ADDRESS> '{
+injectived tx wasm execute <CONTRACT_ADDRESS> '{
   "propose": {
     "proposal": {
       "revoke_all_rules": {}
     }
   }
-}' --from <ADMIN_KEY> --chain-id <CHAIN_ID> --gas auto --fees 10000usei
+}' --from <ADMIN_KEY> --chain-id <CHAIN_ID> --gas auto --fees 500000000000000inj
 ```
 
 When passed, all user rules are cleared and fee grants are revoked for all non-owner, non-admin addresses.
