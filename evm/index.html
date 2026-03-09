@@ -1,0 +1,2638 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Volta documentation">
+      
+      
+      
+      
+        <link rel="prev" href="../stellar/troubleshooting/">
+      
+      
+        <link rel="next" href="tutorials/getting-started/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Overview - Volta Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#volta-evm-smart-account-integration-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Volta Docs" class="md-header__button md-logo" aria-label="Volta Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Volta Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/VoltaHQ/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Volta Docs" class="md-nav__button md-logo" aria-label="Volta Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Volta Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/VoltaHQ/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Stellar/Soroban
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Stellar/Soroban
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stellar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stellar/tutorials/getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stellar/tutorials/first-proposal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    First Proposal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stellar/tutorials/integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dApp Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stellar/troubleshooting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    EVM (ERC-4337)
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            EVM (ERC-4337)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorials-guides" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tutorials &amp; Guides
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contract-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contract Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contract Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Concepts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-validation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature Validation Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privileged-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privileged Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contract-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contract Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contract Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initializesessionkeyvalidator-executor-owners-minquorum-entrypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      initialize(sessionKeyValidator, executor, owners, minQuorum, entryPoint)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executedest-value-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      execute(dest, value, data)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executebatchbatchcall" class="md-nav__link">
+    <span class="md-ellipsis">
+      executeBatch(batchCall)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enableinstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      enable(instructions)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disableinstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      disable(instructions)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updateownersowners-minquorum" class="md-nav__link">
+    <span class="md-ellipsis">
+      updateOwners(owners, minQuorum)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgradesessionkeyvalidatorsessionkeyvalidator" class="md-nav__link">
+    <span class="md-ellipsis">
+      upgradeSessionKeyValidator(sessionKeyValidator)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgradeexecutorexecutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      upgradeExecutor(executor)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiupgradesessionkeyvalidator-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      multiUpgrade(sessionKeyValidator, executor)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updateentrypointentrypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      updateEntryPoint(entryPoint)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isvalidsignaturehash-signature-bytes4" class="md-nav__link">
+    <span class="md-ellipsis">
+      isValidSignature(hash, signature) -&gt; bytes4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdeposit-uint256" class="md-nav__link">
+    <span class="md-ellipsis">
+      getDeposit() -&gt; uint256
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adddeposit" class="md-nav__link">
+    <span class="md-ellipsis">
+      addDeposit()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#withdrawdeposittowithdrawaddress-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      withdrawDepositTo(withdrawAddress, amount)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#factory-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Factory Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Factory Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#createaccountaccountimplementation-salt-sessionkeyvalidator-executor-owners-minquorum-entrypoint-signature-voltaaccount" class="md-nav__link">
+    <span class="md-ellipsis">
+      createAccount(accountImplementation, salt, sessionKeyValidator, executor, owners, minQuorum, entryPoint, signature) -&gt; VoltaAccount
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaddressaccountimplementation-salt-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      getAddress(accountImplementation, salt) -&gt; address
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typescriptjavascript-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      TypeScript/JavaScript Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TypeScript/JavaScript Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-account-deposit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check Account Deposit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-counterfactual-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compute Counterfactual Address
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-a-useroperation-for-single-execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a UserOperation for Single Execute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-a-useroperation-for-batch-execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a UserOperation for Batch Execute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sign-a-useroperation-multi-sig" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sign a UserOperation (Multi-Sig)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-a-session-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable a Session Key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-a-session-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable a Session Key
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-key-validator-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Key Validator Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#factory-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Factory Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executor-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executor Errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials/getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials/session-keys/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Keys
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    CosmWasm
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            CosmWasm
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cosmwasm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cosmwasm/tutorials/getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cosmwasm/tutorials/rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rules & Session Keys
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cosmwasm/troubleshooting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorials-guides" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tutorials &amp; Guides
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contract-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contract Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contract Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Concepts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-validation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature Validation Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privileged-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privileged Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contract-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contract Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contract Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initializesessionkeyvalidator-executor-owners-minquorum-entrypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      initialize(sessionKeyValidator, executor, owners, minQuorum, entryPoint)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executedest-value-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      execute(dest, value, data)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executebatchbatchcall" class="md-nav__link">
+    <span class="md-ellipsis">
+      executeBatch(batchCall)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enableinstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      enable(instructions)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disableinstructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      disable(instructions)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updateownersowners-minquorum" class="md-nav__link">
+    <span class="md-ellipsis">
+      updateOwners(owners, minQuorum)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgradesessionkeyvalidatorsessionkeyvalidator" class="md-nav__link">
+    <span class="md-ellipsis">
+      upgradeSessionKeyValidator(sessionKeyValidator)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgradeexecutorexecutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      upgradeExecutor(executor)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiupgradesessionkeyvalidator-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      multiUpgrade(sessionKeyValidator, executor)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updateentrypointentrypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      updateEntryPoint(entryPoint)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isvalidsignaturehash-signature-bytes4" class="md-nav__link">
+    <span class="md-ellipsis">
+      isValidSignature(hash, signature) -&gt; bytes4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdeposit-uint256" class="md-nav__link">
+    <span class="md-ellipsis">
+      getDeposit() -&gt; uint256
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adddeposit" class="md-nav__link">
+    <span class="md-ellipsis">
+      addDeposit()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#withdrawdeposittowithdrawaddress-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      withdrawDepositTo(withdrawAddress, amount)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#factory-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Factory Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Factory Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#createaccountaccountimplementation-salt-sessionkeyvalidator-executor-owners-minquorum-entrypoint-signature-voltaaccount" class="md-nav__link">
+    <span class="md-ellipsis">
+      createAccount(accountImplementation, salt, sessionKeyValidator, executor, owners, minQuorum, entryPoint, signature) -&gt; VoltaAccount
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaddressaccountimplementation-salt-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      getAddress(accountImplementation, salt) -&gt; address
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typescriptjavascript-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      TypeScript/JavaScript Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TypeScript/JavaScript Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-account-deposit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check Account Deposit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-counterfactual-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compute Counterfactual Address
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-a-useroperation-for-single-execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a UserOperation for Single Execute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-a-useroperation-for-batch-execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a UserOperation for Batch Execute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sign-a-useroperation-multi-sig" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sign a UserOperation (Multi-Sig)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-a-session-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable a Session Key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-a-session-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable a Session Key
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-key-validator-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Key Validator Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#factory-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Factory Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executor-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executor Errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="volta-evm-smart-account-integration-guide">Volta EVM Smart Account Integration Guide</h1>
+<p>This guide provides comprehensive documentation for integrating with the Volta ERC-4337 smart account deployed on EVM-compatible chains.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#contract-architecture">Contract Architecture</a></li>
+<li><a href="#contract-methods">Contract Methods</a></li>
+<li><a href="#typescriptjavascript-examples">TypeScript/JavaScript Examples</a></li>
+<li><a href="#error-handling">Error Handling</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+</ul>
+<h2 id="tutorials-guides">Tutorials &amp; Guides</h2>
+<p>New to Volta on EVM? Start here:</p>
+<ul>
+<li><strong><a href="tutorials/getting-started/">Getting Started</a></strong> - Deploy and initialize your first Volta smart account</li>
+<li><strong><a href="tutorials/session-keys/">Session Keys</a></strong> - Configure session keys with granular permissions</li>
+<li><strong><a href="troubleshooting/">Troubleshooting</a></strong> - Common errors and solutions</li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>The Volta smart account is an ERC-4337 account abstraction wallet that enables:</p>
+<ul>
+<li><strong>Multi-owner configuration</strong>: M-of-N multi-signature with a configurable quorum threshold</li>
+<li><strong>Session keys</strong>: Delegated signing keys with granular permission rules (target addresses, function selectors, parameter constraints, value limits, and time bounds)</li>
+<li><strong>Batch execution</strong>: Execute multiple transactions atomically in a single UserOperation</li>
+<li><strong>Gas sponsorship</strong>: Verifying paymaster for gasless transactions</li>
+<li><strong>Modular architecture</strong>: Upgradeable executor and session key validator modules via UUPS proxy</li>
+<li><strong>ERC-1271 signatures</strong>: On-chain signature validation for both owners and session keys</li>
+</ul>
+<blockquote>
+<p><strong>Key Design Note</strong></p>
+<p>The first owner in the owners array is always the Volta platform address. Volta's signature is required for privileged operations (enable/disable session keys, upgrades, owner changes), but is <strong>not</strong> counted toward the quorum for regular transactions.</p>
+</blockquote>
+<h2 id="contract-architecture">Contract Architecture</h2>
+<h3 id="core-contracts">Core Contracts</h3>
+<table>
+<thead>
+<tr>
+<th>Contract</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VoltaAccount</strong></td>
+<td>Main smart account (ERC-4337 <code>BaseAccount</code> + UUPS upgradeable)</td>
+</tr>
+<tr>
+<td><strong>VoltaFactory</strong></td>
+<td>Deterministic account deployment via CREATE2</td>
+</tr>
+<tr>
+<td><strong>SessionKeyValidator</strong></td>
+<td>Session key permission engine (delegatecalled by account)</td>
+</tr>
+<tr>
+<td><strong>DefaultExecutor</strong></td>
+<td>Transaction execution module (delegatecalled by account)</td>
+</tr>
+<tr>
+<td><strong>VoltaVerifyingPaymaster</strong></td>
+<td>Gas sponsorship via signed paymaster data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Owners</strong>: Addresses that can co-sign UserOperations. The first owner is always Volta.</li>
+<li><strong>Min Quorum</strong>: Minimum number of <strong>non-Volta</strong> owner signatures required</li>
+<li><strong>Session Keys</strong>: Delegated signers with scoped permissions (target contracts, function selectors, parameter rules, value limits, time bounds)</li>
+<li><strong>EntryPoint</strong>: The ERC-4337 singleton that validates and executes UserOperations</li>
+</ul>
+<h3 id="signature-validation-flow">Signature Validation Flow</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>UserOperation received
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    ├─ Multiple signatures (len &gt; 65)?
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    │   └─ Validate as M-of-N owners
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    │       ├─ Count unique non-Volta owner sigs
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    │       ├─ Check quorum met
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    │       └─ Check Volta signed (if privileged operation)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    └─ Single signature (len == 65)?
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        ├─ minQuorum == 1? Try as owner first
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        └─ Validate as session key
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>            ├─ Check session key is enabled
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>            ├─ Check time bounds (validAfter/validUntil)
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>            └─ Validate call permissions (targets, selectors, params)
+</code></pre></div>
+<h3 id="privileged-operations">Privileged Operations</h3>
+<p>The following operations require Volta's signature as part of the quorum:</p>
+<ul>
+<li><code>enable</code> / <code>disable</code> (session key management)</li>
+<li><code>upgradeTo</code> / <code>upgradeToAndCall</code> (account implementation upgrade)</li>
+<li><code>upgradeSessionKeyValidator</code> / <code>upgradeExecutor</code> / <code>multiUpgrade</code></li>
+<li><code>updateOwners</code></li>
+<li><code>updateEntryPoint</code></li>
+</ul>
+<h2 id="contract-methods">Contract Methods</h2>
+<h3 id="initializesessionkeyvalidator-executor-owners-minquorum-entrypoint"><code>initialize(sessionKeyValidator, executor, owners, minQuorum, entryPoint)</code></h3>
+<p>Initializes the smart account. Called once by the factory during deployment.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sessionKeyValidator</code></td>
+<td><code>address</code></td>
+<td>Session key validator contract</td>
+</tr>
+<tr>
+<td><code>executor</code></td>
+<td><code>address</code></td>
+<td>Executor contract</td>
+</tr>
+<tr>
+<td><code>owners</code></td>
+<td><code>address[]</code></td>
+<td>Owner addresses (first must be Volta)</td>
+</tr>
+<tr>
+<td><code>minQuorum</code></td>
+<td><code>uint256</code></td>
+<td>Minimum non-Volta owner signatures required</td>
+</tr>
+<tr>
+<td><code>entryPoint</code></td>
+<td><code>IEntryPoint</code></td>
+<td>ERC-4337 EntryPoint address</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Requirements:</strong>
+- At least 3 addresses in <code>owners</code> (Volta + 2 non-Volta owners minimum)
+- <code>minQuorum &gt;= 1</code> and <code>minQuorum &lt;= owners.length - 1</code></p>
+<hr />
+<h3 id="executedest-value-data"><code>execute(dest, value, data)</code></h3>
+<p>Executes a single transaction. Must be called via the EntryPoint.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dest</code></td>
+<td><code>address</code></td>
+<td>Target contract address</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>uint256</code></td>
+<td>ETH value to send (in wei)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>bytes</code></td>
+<td>Calldata for the target</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="executebatchbatchcall"><code>executeBatch(batchCall)</code></h3>
+<p>Executes multiple transactions atomically. Must be called via the EntryPoint.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>batchCall</code></td>
+<td><code>ExecuteBatchCall</code></td>
+<td>Struct containing an array of <code>Call</code> structs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Structs:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">struct</span><span class="w"> </span><span class="nv">Call</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">target</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">value</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">data</span><span class="p">;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kt">struct</span><span class="w"> </span><span class="nv">ExecuteBatchCall</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span>Call<span class="p">[]</span><span class="w"> </span>calls<span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="enableinstructions"><code>enable(instructions)</code></h3>
+<p>Enables session keys with permission rules. Requires Volta's signature.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>instructions</code></td>
+<td><code>EnableUserInstruction[]</code></td>
+<td>Array of session key configurations</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>EnableUserInstruction</code> struct:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userAddress</code></td>
+<td><code>address</code></td>
+<td>Session key address</td>
+</tr>
+<tr>
+<td><code>rules</code></td>
+<td><code>AccessRuleRecipe[]</code></td>
+<td>Per-target permission rules</td>
+</tr>
+<tr>
+<td><code>globalMaxValue</code></td>
+<td><code>uint256</code></td>
+<td>Global ETH send limit (when no calldata)</td>
+</tr>
+<tr>
+<td><code>validAfterUntil</code></td>
+<td><code>uint96</code></td>
+<td>Two packed <code>uint48</code> timestamps: <code>validAfter \|\| validUntil</code></td>
+</tr>
+<tr>
+<td><code>signaturesEnabled</code></td>
+<td><code>bool</code></td>
+<td>Allow ERC-1271 signature validation for this key</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>AccessRuleRecipe</code> struct:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>targetAddress</code></td>
+<td><code>address</code></td>
+<td>Contract the session key can interact with</td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td><code>bool</code></td>
+<td>Whether this target is accessible</td>
+</tr>
+<tr>
+<td><code>whitelisted</code></td>
+<td><code>bool</code></td>
+<td>If true, all calls to this target are allowed</td>
+</tr>
+<tr>
+<td><code>maxValue</code></td>
+<td><code>uint256</code></td>
+<td>Max ETH value for calls to this target</td>
+</tr>
+<tr>
+<td><code>selectorRules</code></td>
+<td><code>SelectorRuleRecipe[]</code></td>
+<td>Per-function permission rules</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>SelectorRuleRecipe</code> struct:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selector</code></td>
+<td><code>bytes4</code></td>
+<td>Function selector</td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td><code>bool</code></td>
+<td>Whether this function is callable</td>
+</tr>
+<tr>
+<td><code>whitelisted</code></td>
+<td><code>bool</code></td>
+<td>If true, any params are allowed</td>
+</tr>
+<tr>
+<td><code>paramRuleSets</code></td>
+<td><code>ParamRuleSet[]</code></td>
+<td>Parameter constraints (OR logic between sets)</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>ParamRuleSet</code> struct:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>paramRules</code></td>
+<td><code>ParamRule[]</code></td>
+<td>Parameter rules (AND logic within a set)</td>
+</tr>
+<tr>
+<td><code>maxValue</code></td>
+<td><code>uint256</code></td>
+<td>Max ETH value for this rule set</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>ParamRule</code> struct:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>offset</code></td>
+<td><code>uint256</code></td>
+<td>Byte offset of the parameter in calldata (after selector)</td>
+</tr>
+<tr>
+<td><code>param</code></td>
+<td><code>bytes32</code></td>
+<td>Value to compare against</td>
+</tr>
+<tr>
+<td><code>condition</code></td>
+<td><code>ParamCondition</code></td>
+<td>Comparison operator</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>ParamCondition</code> enum:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>EQUAL, GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL, LESS_THAN_OR_EQUAL, NOT_EQUAL
+</code></pre></div></p>
+<hr />
+<h3 id="disableinstructions"><code>disable(instructions)</code></h3>
+<p>Disables session keys. Requires Volta's signature.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>instructions</code></td>
+<td><code>DisableUserInstruction[]</code></td>
+<td>Array containing <code>{ userAddress: address }</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="updateownersowners-minquorum"><code>updateOwners(owners, minQuorum)</code></h3>
+<p>Updates the owner set and quorum. Requires Volta's signature.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>owners</code></td>
+<td><code>address[]</code></td>
+<td>New owner list (first must remain Volta)</td>
+</tr>
+<tr>
+<td><code>minQuorum</code></td>
+<td><code>uint256</code></td>
+<td>New quorum threshold</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Requirements:</strong>
+- <code>owners[0]</code> must be the current Volta address
+- At least 3 addresses (Volta + 2 owners)
+- <code>minQuorum &gt;= 1</code> and <code>minQuorum &lt;= owners.length - 1</code>
+- No duplicate addresses</p>
+<hr />
+<h3 id="upgradesessionkeyvalidatorsessionkeyvalidator"><code>upgradeSessionKeyValidator(sessionKeyValidator)</code></h3>
+<p>Replaces the session key validator module. Clears all existing session key data. Requires Volta's signature.</p>
+<hr />
+<h3 id="upgradeexecutorexecutor"><code>upgradeExecutor(executor)</code></h3>
+<p>Replaces the executor module. Requires Volta's signature.</p>
+<hr />
+<h3 id="multiupgradesessionkeyvalidator-executor"><code>multiUpgrade(sessionKeyValidator, executor)</code></h3>
+<p>Upgrades both modules in one call. Pass <code>address(0)</code> to skip either. Requires Volta's signature.</p>
+<hr />
+<h3 id="updateentrypointentrypoint"><code>updateEntryPoint(entryPoint)</code></h3>
+<p>Updates the ERC-4337 EntryPoint. Requires Volta's signature.</p>
+<hr />
+<h3 id="isvalidsignaturehash-signature-bytes4"><code>isValidSignature(hash, signature) -&gt; bytes4</code></h3>
+<p>ERC-1271 signature validation. Returns <code>0x20c13b0b</code> for valid signatures.</p>
+<p><strong>Validation logic:</strong></p>
+<ol>
+<li>Wraps <code>hash</code> with the account's EIP-712 domain separator</li>
+<li>Single signature + <code>minQuorum == 1</code>: tries owner validation first, then session key</li>
+<li>Single signature: validates as session key (if <code>signaturesEnabled</code> for that key)</li>
+<li>Multiple signatures: validates M-of-N owner quorum</li>
+</ol>
+<hr />
+<h3 id="getdeposit-uint256"><code>getDeposit() -&gt; uint256</code></h3>
+<p>Returns the account's deposit balance in the EntryPoint.</p>
+<hr />
+<h3 id="adddeposit"><code>addDeposit()</code></h3>
+<p>Deposits ETH to the EntryPoint for this account. Must be called via EntryPoint.</p>
+<hr />
+<h3 id="withdrawdeposittowithdrawaddress-amount"><code>withdrawDepositTo(withdrawAddress, amount)</code></h3>
+<p>Withdraws from the EntryPoint deposit. Must be called via EntryPoint.</p>
+<hr />
+<h2 id="factory-methods">Factory Methods</h2>
+<h3 id="createaccountaccountimplementation-salt-sessionkeyvalidator-executor-owners-minquorum-entrypoint-signature-voltaaccount"><code>createAccount(accountImplementation, salt, sessionKeyValidator, executor, owners, minQuorum, entryPoint, signature) -&gt; VoltaAccount</code></h3>
+<p>Deploys a new Volta smart account via CREATE2.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>accountImplementation</code></td>
+<td><code>address</code></td>
+<td>VoltaAccount implementation address</td>
+</tr>
+<tr>
+<td><code>salt</code></td>
+<td><code>uint256</code></td>
+<td>Deployment salt for deterministic address</td>
+</tr>
+<tr>
+<td><code>sessionKeyValidator</code></td>
+<td><code>address</code></td>
+<td>Session key validator contract</td>
+</tr>
+<tr>
+<td><code>executor</code></td>
+<td><code>address</code></td>
+<td>Executor contract</td>
+</tr>
+<tr>
+<td><code>owners</code></td>
+<td><code>address[]</code></td>
+<td>Owner addresses (first must be Volta)</td>
+</tr>
+<tr>
+<td><code>minQuorum</code></td>
+<td><code>uint256</code></td>
+<td>Quorum threshold</td>
+</tr>
+<tr>
+<td><code>entryPoint</code></td>
+<td><code>IEntryPoint</code></td>
+<td>EntryPoint address</td>
+</tr>
+<tr>
+<td><code>signature</code></td>
+<td><code>bytes</code></td>
+<td>Factory owner's signature over all parameters + chainId</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> The deployed <code>VoltaAccount</code> proxy address.</p>
+<hr />
+<h3 id="getaddressaccountimplementation-salt-address"><code>getAddress(accountImplementation, salt) -&gt; address</code></h3>
+<p>Computes the counterfactual address of an account without deploying it.</p>
+<hr />
+<h2 id="typescriptjavascript-examples">TypeScript/JavaScript Examples</h2>
+<h3 id="setup">Setup</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ethers</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;ethers&#39;</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">// Connect to provider</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kd">const</span><span class="w"> </span><span class="nx">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">JsonRpcProvider</span><span class="p">(</span><span class="s1">&#39;https://your-rpc-url&#39;</span><span class="p">);</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1">// VoltaAccount ABI (key functions)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kd">const</span><span class="w"> </span><span class="nx">VOLTA_ACCOUNT_ABI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="s1">&#39;function execute(address dest, uint256 value, bytes data)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="s1">&#39;function executeBatch(tuple(tuple(address target, uint256 value, bytes data)[] calls) batchCall)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="s1">&#39;function enable(tuple(address userAddress, tuple(address targetAddress, bool enabled, bool whitelisted, uint256 maxValue, tuple(bytes4 selector, bool enabled, bool whitelisted, tuple(tuple(uint256 offset, bytes32 param, uint8 condition)[] paramRules, uint256 maxValue)[] paramRuleSets)[] selectorRules)[] rules, uint256 globalMaxValue, uint96 validAfterUntil, bool signaturesEnabled)[] instructions)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="s1">&#39;function disable(tuple(address userAddress)[] instructions)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span><span class="s1">&#39;function updateOwners(address[] owners, uint256 minQuorum)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">  </span><span class="s1">&#39;function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">  </span><span class="s1">&#39;function getDeposit() view returns (uint256)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="p">];</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1">// VoltaFactory ABI</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="kd">const</span><span class="w"> </span><span class="nx">VOLTA_FACTORY_ABI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">  </span><span class="s1">&#39;function createAccount(address accountImplementation, uint256 salt, address sessionKeyValidator, address executor, address[] owners, uint256 minQuorum, address entryPoint, bytes signature) returns (address)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">  </span><span class="s1">&#39;function getAddress(address accountImplementation, uint256 salt) view returns (address)&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="p">];</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="kd">const</span><span class="w"> </span><span class="nx">accountAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Your Volta account address</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="kd">const</span><span class="w"> </span><span class="nx">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">accountAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">VOLTA_ACCOUNT_ABI</span><span class="p">,</span><span class="w"> </span><span class="nx">provider</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="check-account-deposit">Check Account Deposit</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getDeposit</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">bigint</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">account</span><span class="p">.</span><span class="nx">getDeposit</span><span class="p">();</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="compute-counterfactual-address">Compute Counterfactual Address</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getCounterfactualAddress</span><span class="p">(</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nx">factoryAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nx">implementationAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nx">salt</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">factoryAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">VOLTA_FACTORY_ABI</span><span class="p">,</span><span class="w"> </span><span class="nx">provider</span><span class="p">);</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nx">getAddress</span><span class="p">(</span><span class="nx">implementationAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">salt</span><span class="p">);</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="build-a-useroperation-for-single-execute">Build a UserOperation for Single Execute</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">buildExecuteCalldata</span><span class="p">(</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">iface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Interface</span><span class="p">(</span><span class="nx">VOLTA_ACCOUNT_ABI</span><span class="p">);</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">iface</span><span class="p">.</span><span class="nx">encodeFunctionData</span><span class="p">(</span><span class="s1">&#39;execute&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">target</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">]);</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1">// Example: encode an ERC-20 transfer through the smart account</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="kd">const</span><span class="w"> </span><span class="nx">erc20Interface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Interface</span><span class="p">([</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">  </span><span class="s1">&#39;function transfer(address to, uint256 amount)&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">]);</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="kd">const</span><span class="w"> </span><span class="nx">transferData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">erc20Interface</span><span class="p">.</span><span class="nx">encodeFunctionData</span><span class="p">(</span><span class="s1">&#39;transfer&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">  </span><span class="s1">&#39;0xRecipient...&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">  </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">parseUnits</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">18</span><span class="p">),</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="p">]);</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="kd">const</span><span class="w"> </span><span class="nx">callData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">buildExecuteCalldata</span><span class="p">(</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">  </span><span class="s1">&#39;0xTokenContract...&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">  </span><span class="mi">0n</span><span class="p">,</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">  </span><span class="nx">transferData</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="p">);</span>
+</code></pre></div>
+<h3 id="build-a-useroperation-for-batch-execute">Build a UserOperation for Batch Execute</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">buildBatchCalldata</span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nx">calls</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">;</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}[]</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">iface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Interface</span><span class="p">(</span><span class="nx">VOLTA_ACCOUNT_ABI</span><span class="p">);</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">iface</span><span class="p">.</span><span class="nx">encodeFunctionData</span><span class="p">(</span><span class="s1">&#39;executeBatch&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">calls</span><span class="w"> </span><span class="p">}]);</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">}</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1">// Example: approve + swap in one UserOp</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="kd">const</span><span class="w"> </span><span class="nx">approveData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">erc20Interface</span><span class="p">.</span><span class="nx">encodeFunctionData</span><span class="p">(</span><span class="s1">&#39;approve&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="s1">&#39;0xRouter...&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">parseUnits</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">18</span><span class="p">),</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">]);</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="kd">const</span><span class="w"> </span><span class="nx">swapData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Your swap calldata</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="kd">const</span><span class="w"> </span><span class="nx">batchCallData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">buildBatchCalldata</span><span class="p">([</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0xToken...&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">0n</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">approveData</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0xRouter...&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">0n</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">swapData</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="p">]);</span>
+</code></pre></div>
+<h3 id="sign-a-useroperation-multi-sig">Sign a UserOperation (Multi-Sig)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">signUserOp</span><span class="p">(</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nx">userOpHash</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nx">signers</span><span class="o">:</span><span class="w"> </span><span class="kt">ethers.Wallet</span><span class="p">[]</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="c1">// Sort signers: Volta first (if included), then owners</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">signatures</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">signer</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">signers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">sig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">signer</span><span class="p">.</span><span class="nx">signMessage</span><span class="p">(</span><span class="nx">ethers</span><span class="p">.</span><span class="nx">getBytes</span><span class="p">(</span><span class="nx">userOpHash</span><span class="p">));</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nx">signatures</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">sig</span><span class="p">);</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">  </span><span class="c1">// Concatenate all 65-byte signatures</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">signatures</span><span class="p">);</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="enable-a-session-key">Enable a Session Key</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">buildEnableCalldata</span><span class="p">(</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nx">sessionKeyAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nx">allowedTargets</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nx">targetAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nx">whitelisted</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nx">maxValue</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="nx">selectorRules</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">      </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">      </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">      </span><span class="nx">whitelisted</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="p">}[];</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="p">}[],</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="nx">globalMaxValue</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span><span class="nx">validAfter</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span><span class="w">  </span><span class="c1">// unix timestamp</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span><span class="nx">validUntil</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span><span class="w">  </span><span class="c1">// unix timestamp</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">  </span><span class="nx">signaturesEnabled</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">  </span><span class="c1">// Pack validAfter and validUntil into a uint96</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">validAfterUntil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">validAfter</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">48n</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">validUntil</span><span class="p">);</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">instructions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">    </span><span class="nx">userAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">sessionKeyAddress</span><span class="p">,</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">    </span><span class="nx">rules</span><span class="o">:</span><span class="w"> </span><span class="kt">allowedTargets.map</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">      </span><span class="nx">targetAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">t.targetAddress</span><span class="p">,</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">      </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">      </span><span class="nx">whitelisted</span><span class="o">:</span><span class="w"> </span><span class="kt">t.whitelisted</span><span class="p">,</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">      </span><span class="nx">maxValue</span><span class="o">:</span><span class="w"> </span><span class="kt">t.maxValue</span><span class="p">,</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">      </span><span class="nx">selectorRules</span><span class="o">:</span><span class="w"> </span><span class="kt">t.selectorRules.map</span><span class="p">(</span><span class="nx">sr</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="w">        </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="kt">sr.selector</span><span class="p">,</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">        </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kt">sr.enabled</span><span class="p">,</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="w">        </span><span class="nx">whitelisted</span><span class="o">:</span><span class="w"> </span><span class="kt">sr.whitelisted</span><span class="p">,</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="w">        </span><span class="nx">paramRuleSets</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="w">      </span><span class="p">})),</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="w">    </span><span class="p">})),</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="w">    </span><span class="nx">globalMaxValue</span><span class="p">,</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="w">    </span><span class="nx">validAfterUntil</span><span class="p">,</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a><span class="w">    </span><span class="nx">signaturesEnabled</span><span class="p">,</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="w">  </span><span class="p">}];</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">iface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Interface</span><span class="p">(</span><span class="nx">VOLTA_ACCOUNT_ABI</span><span class="p">);</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">iface</span><span class="p">.</span><span class="nx">encodeFunctionData</span><span class="p">(</span><span class="s1">&#39;enable&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">instructions</span><span class="p">]);</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="disable-a-session-key">Disable a Session Key</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">buildDisableCalldata</span><span class="p">(</span><span class="nx">sessionKeyAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">iface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Interface</span><span class="p">(</span><span class="nx">VOLTA_ACCOUNT_ABI</span><span class="p">);</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">iface</span><span class="p">.</span><span class="nx">encodeFunctionData</span><span class="p">(</span><span class="s1">&#39;disable&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[[{</span><span class="w"> </span><span class="nx">userAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">sessionKeyAddress</span><span class="w"> </span><span class="p">}]]);</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="error-handling">Error Handling</h2>
+<p>The contract uses <code>require</code> statements with descriptive error messages:</p>
+<table>
+<thead>
+<tr>
+<th>Error Message</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VAE: minQuorum must be greater than 0</code></td>
+<td>Quorum set to 0 during initialization or update</td>
+</tr>
+<tr>
+<td><code>VAE: At least 2 non-Volta owners required</code></td>
+<td>Fewer than 3 addresses in owners array</td>
+</tr>
+<tr>
+<td><code>VAE: Number of non-Volta owners must be greater than or equal to minQuorum</code></td>
+<td>Quorum exceeds number of non-Volta owners</td>
+</tr>
+<tr>
+<td><code>VAE: owner cannot be 0x0</code></td>
+<td>Zero address in owners array</td>
+</tr>
+<tr>
+<td><code>VAE: Duplicate owner</code></td>
+<td>Same address appears twice in owners</td>
+</tr>
+<tr>
+<td><code>VAE: first owner must be Volta</code></td>
+<td><code>updateOwners</code> called with different first owner</td>
+</tr>
+<tr>
+<td><code>VAE: Volta must be the first signer</code></td>
+<td>Volta's signature is not first in concatenated signatures</td>
+</tr>
+<tr>
+<td><code>VAE: Invalid callData</code></td>
+<td>UserOp calldata shorter than 4 bytes</td>
+</tr>
+<tr>
+<td><code>VAE: sessionKeyValidator required</code></td>
+<td>Zero address for session key validator</td>
+</tr>
+<tr>
+<td><code>VAE: New sessionKeyValidator must be a contract</code></td>
+<td>Non-contract address for validator upgrade</td>
+</tr>
+<tr>
+<td><code>VAE: New sessionKeyValidator must be different</code></td>
+<td>Upgrading to the same validator</td>
+</tr>
+<tr>
+<td><code>VAE: executor required</code></td>
+<td>Zero address for executor</td>
+</tr>
+<tr>
+<td><code>VAE: New executor must be a contract</code></td>
+<td>Non-contract address for executor upgrade</td>
+</tr>
+<tr>
+<td><code>VAE: New executor must be different</code></td>
+<td>Upgrading to the same executor</td>
+</tr>
+<tr>
+<td><code>VAE: entryPoint required</code></td>
+<td>Zero address for EntryPoint</td>
+</tr>
+<tr>
+<td><code>VAE: entryPoint must be different</code></td>
+<td>Updating to the same EntryPoint</td>
+</tr>
+<tr>
+<td><code>VAE: withdrawAddress required</code></td>
+<td>Zero address for deposit withdrawal</td>
+</tr>
+</tbody>
+</table>
+<h3 id="session-key-validator-errors">Session Key Validator Errors</h3>
+<table>
+<thead>
+<tr>
+<th>Error Message</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SKV: Invalid user address</code></td>
+<td>Zero address as session key</td>
+</tr>
+<tr>
+<td><code>SKV: Invalid call data length</code></td>
+<td>UserOp calldata too short for execute/executeBatch</td>
+</tr>
+<tr>
+<td><code>SKV: Target address not enabled</code></td>
+<td>Session key calling a contract not in its permissions</td>
+</tr>
+<tr>
+<td><code>SKV: User not enabled for this selector</code></td>
+<td>Function selector not allowed for session key</td>
+</tr>
+<tr>
+<td><code>SKV: Withdrawal limit exceeded</code></td>
+<td>ETH transfer exceeds the target's <code>maxValue</code></td>
+</tr>
+<tr>
+<td><code>SKV: Param validation failed</code></td>
+<td>Call parameters don't match any <code>ParamRuleSet</code></td>
+</tr>
+<tr>
+<td><code>SKV: unsupported selector</code></td>
+<td>UserOp uses a function other than <code>execute</code>/<code>executeBatch</code></td>
+</tr>
+<tr>
+<td><code>SKV: Too many rules specified</code></td>
+<td>More than 64 access rules in one instruction</td>
+</tr>
+<tr>
+<td><code>SKV: Too many selector rules specified</code></td>
+<td>More than 64 selector rules per target</td>
+</tr>
+<tr>
+<td><code>SKV: Too many param rule sets specified</code></td>
+<td>More than 64 param rule sets per selector</td>
+</tr>
+</tbody>
+</table>
+<h3 id="factory-errors">Factory Errors</h3>
+<table>
+<thead>
+<tr>
+<th>Error Message</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VF: Invalid owner</code></td>
+<td>Zero address as factory owner</td>
+</tr>
+<tr>
+<td><code>VF: Account already deployed</code></td>
+<td>Account with same implementation + salt exists</td>
+</tr>
+<tr>
+<td><code>VF: Invalid address</code></td>
+<td>Zero address for stake withdrawal</td>
+</tr>
+<tr>
+<td><code>invalid signature</code></td>
+<td>Factory owner signature verification failed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="executor-errors">Executor Errors</h3>
+<table>
+<thead>
+<tr>
+<th>Error Message</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DE: Call failed without revert reason</code></td>
+<td>Target call reverted without a message</td>
+</tr>
+</tbody>
+</table>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Always include Volta as first signer</strong> for privileged operations (enable/disable, upgrades, owner changes)</p>
+</li>
+<li>
+<p><strong>Use session keys for dApp interactions</strong> rather than requiring full multi-sig for every transaction</p>
+</li>
+<li>
+<p><strong>Set tight time bounds</strong> on session keys using <code>validAfter</code> and <code>validUntil</code> to limit exposure</p>
+</li>
+<li>
+<p><strong>Use parameter rules</strong> to constrain session key actions (e.g., limit transfer amounts, restrict recipient addresses)</p>
+</li>
+<li>
+<p><strong>Set appropriate <code>globalMaxValue</code></strong> to limit native token transfers by session keys</p>
+</li>
+<li>
+<p><strong>Test on testnets first</strong> before deploying to mainnet</p>
+</li>
+<li>
+<p><strong>Use the factory's <code>getAddress</code></strong> to compute account addresses before deployment for counterfactual account flows</p>
+</li>
+</ol>
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337 Specification</a></li>
+<li><a href="https://eips.ethereum.org/EIPS/eip-1271">ERC-1271 Specification</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.instant", "navigation.sections", "navigation.top", "search.highlight"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>
