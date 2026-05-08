@@ -69,7 +69,7 @@ The diagrams below show the four runtime flows owners and integrators encounter 
 
 ### Config / Upgrade Proposal Lifecycle
 
-`propose()` creates either a `Config` proposal (changes `owners` / `threshold`) or an `Upgrade` proposal (replaces the contract WASM by hash). Both share the same voting mechanics: the proposal sits in `Pending` until `Yes` votes reach the configured threshold, at which point the contract auto-executes the change. Executing a Config or Upgrade proposal invalidates all other pending proposals.
+`propose()` creates either a `Config` proposal (changes `owners` / `threshold`) or an `Upgrade` proposal (replaces the contract WASM by hash). Both share the same voting mechanics: the proposal sits in `Pending` until `Yes` votes reach the configured threshold, at which point the contract auto-executes the change. Executing a Config or Upgrade proposal invalidates all other pending proposals. Config execution additionally emits a `cfg_set` event with the new configuration; Upgrade execution emits no extra event beyond `exec_prop`.
 
 ```mermaid
 sequenceDiagram
@@ -87,7 +87,7 @@ sequenceDiagram
     Note over V: emit vote, pend_prop
 
     C->>V: vote(id, Yes)
-    Note over V: Yes count ≥ threshold → auto-execute<br/>emit vote, exec_prop, cfg_set
+    Note over V: Yes count ≥ threshold → auto-execute<br/>emit vote, exec_prop<br/>(plus cfg_set for Config; no extra event for Upgrade)
     V-->>C: Proposal { status: Executed }
 ```
 
@@ -110,7 +110,7 @@ sequenceDiagram
     Note over V: threshold met → execute<br/>authorize self with auth_entries
     V->>T: fn(args)
     T-->>V: result
-    Note over V: emit exec_prop, inv_ok
+    Note over V: emit vote, exec_prop, inv_ok
     V-->>B: Proposal { status: Executed }
 ```
 
@@ -154,9 +154,10 @@ sequenceDiagram
 
     B->>V: vote(id, No)
     V-->>B: Proposal { status: Pending, votes: {B: No} }
+    Note over V: emit vote, pend_prop
 
     C->>V: vote(id, No)
-    Note over V: Yes votes (0) + remaining (0) < threshold (2)<br/>auto-reject<br/>emit rej_prop
+    Note over V: Yes votes (0) + remaining (1) < threshold (2)<br/>auto-reject<br/>emit vote, rej_prop
     V-->>C: Proposal { status: Rejected }
 ```
 
