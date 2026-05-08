@@ -157,7 +157,7 @@ sequenceDiagram
     Note over V: emit vote, pend_prop
 
     C->>V: vote(id, No)
-    Note over V: Yes votes (0) + remaining (1) < threshold (2)<br/>auto-reject<br/>emit vote, rej_prop
+    Note over V: max possible Yes (0 + 1) below threshold (2)<br/>auto-reject<br/>emit vote, rej_prop
     V-->>C: Proposal { status: Rejected }
 ```
 
