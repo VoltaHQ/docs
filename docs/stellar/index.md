@@ -6,6 +6,7 @@ This guide provides comprehensive documentation for integrating with the Volta m
 
 - [Overview](#overview)
 - [Contract Architecture](#contract-architecture)
+- [Common Flows](#common-flows)
 - [Installation](#installation)
 - [Contract Methods](#contract-methods)
 - [TypeScript/JavaScript Examples](#typescriptjavascript-examples)
@@ -61,6 +62,103 @@ The Volta contract is a multi-signature governance contract that enables:
 > **⚠️ Authorization for Sub-Calls**
 >
 > When the invoked contract needs to call other contracts that require the Volta contract's authorization, you must provide the appropriate `auth_entries` when calling `invoke()`. The contract will use these entries to authorize itself for the sub-calls. Without proper auth entries, sub-contract invocations requiring authorization will fail.
+
+## Common Flows
+
+The diagrams below show the four runtime flows owners and integrators encounter most often. Each lane labeled `Owner X` is a separate signing key calling the contract; the `Volta contract` lane represents on-ledger contract execution. Events the contract emits at each step are shown as inline notes — see the [Events](#events) section for how to subscribe to them.
+
+### Config / Upgrade Proposal Lifecycle
+
+`propose()` creates either a `Config` proposal (changes `owners` / `threshold`) or an `Upgrade` proposal (replaces the contract WASM by hash). Both share the same voting mechanics: the proposal sits in `Pending` until `Yes` votes reach the configured threshold, at which point the contract auto-executes the change. Executing a Config or Upgrade proposal invalidates all other pending proposals.
+
+```mermaid
+sequenceDiagram
+    actor A as Owner A (proposer)
+    actor B as Owner B
+    actor C as Owner C
+    participant V as Volta contract
+
+    A->>V: propose(Config { owners, threshold })
+    V-->>A: Proposal { id, status: Pending, votes: {} }
+    Note over V: emit new_prop
+
+    B->>V: vote(id, Yes)
+    V-->>B: Proposal { status: Pending, votes: {B: Yes} }
+    Note over V: emit vote, pend_prop
+
+    C->>V: vote(id, Yes)
+    Note over V: Yes count ≥ threshold → auto-execute<br/>emit vote, exec_prop, cfg_set
+    V-->>C: Proposal { status: Executed }
+```
+
+### Invoke Proposal (with auto-vote and sub-call)
+
+`invoke()` differs from `propose()` in two ways. First, the caller's vote is auto-counted as `Yes`, so only `threshold - 1` additional votes are needed. Second, when the proposal is approved, the contract authorizes itself using the supplied `auth_entries` before calling the target function. Without those entries, sub-calls that require the Volta contract's authorization will fail.
+
+```mermaid
+sequenceDiagram
+    actor A as Owner A (caller)
+    actor B as Owner B
+    participant V as Volta contract
+    participant T as Target contract
+
+    A->>V: invoke(target, fn, args, auth_entries)
+    Note over V: creates Invoke proposal<br/>auto-counts A's vote as Yes<br/>emit new_prop
+    V-->>A: ()
+
+    B->>V: vote(id, Yes)
+    Note over V: threshold met → execute<br/>authorize self with auth_entries
+    V->>T: fn(args)
+    T-->>V: result
+    Note over V: emit exec_prop, inv_ok
+    V-->>B: Proposal { status: Executed }
+```
+
+### Revoke Proposal
+
+Only the proposal creator can revoke a pending proposal — other owners attempting to revoke get the `NotCaller` error. Other owners who object should vote `No` instead. Once a proposal is executed or rejected it can no longer be revoked.
+
+```mermaid
+sequenceDiagram
+    actor A as Owner A (creator)
+    actor B as Owner B
+    participant V as Volta contract
+
+    A->>V: propose(...)
+    V-->>A: Proposal { id, status: Pending }
+
+    B->>V: revoke_proposal(id)
+    V-->>B: Error: NotCaller
+    Note right of B: only the creator can revoke
+
+    A->>V: revoke_proposal(id)
+    Note over V: emit rev_prop
+    V-->>A: ()
+```
+
+### Rejection (Mathematically Impossible Approval)
+
+The contract auto-rejects a proposal as soon as approval becomes mathematically unreachable — that is, when `Yes votes + remaining unvoted owners < threshold` — without waiting for all owners to vote. The example below uses three owners with a threshold of two; once two `No` votes are cast, the third owner could only contribute one more `Yes`, so the threshold of two is unreachable.
+
+```mermaid
+sequenceDiagram
+    actor A as Owner A (proposer)
+    actor B as Owner B
+    actor C as Owner C
+    participant V as Volta contract
+
+    Note over V: 3 owners, threshold = 2
+
+    A->>V: propose(...)
+    V-->>A: Proposal { status: Pending }
+
+    B->>V: vote(id, No)
+    V-->>B: Proposal { status: Pending, votes: {B: No} }
+
+    C->>V: vote(id, No)
+    Note over V: Yes votes (0) + remaining (0) < threshold (2)<br/>auto-reject<br/>emit rej_prop
+    V-->>C: Proposal { status: Rejected }
+```
 
 ## Installation
 
