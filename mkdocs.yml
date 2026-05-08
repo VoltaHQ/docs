@@ -48,16 +48,19 @@ nav:
       - Getting Started: stellar/tutorials/getting-started.md
       - First Proposal: stellar/tutorials/first-proposal.md
       - dApp Integration: stellar/tutorials/integration.md
+    - Audits: stellar/audits.md
     - Troubleshooting: stellar/troubleshooting.md
   - EVM (ERC-4337):
     - Overview: evm/index.md
     - Tutorials:
       - Getting Started: evm/tutorials/getting-started.md
       - Session Keys: evm/tutorials/session-keys.md
+    - Audits: evm/audits.md
     - Troubleshooting: evm/troubleshooting.md
   - CosmWasm:
     - Overview: cosmwasm/index.md
     - Tutorials:
       - Getting Started: cosmwasm/tutorials/getting-started.md
       - Rules & Session Keys: cosmwasm/tutorials/rules.md
+    - Audits: cosmwasm/audits.md
     - Troubleshooting: cosmwasm/troubleshooting.md
