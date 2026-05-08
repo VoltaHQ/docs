@@ -87,7 +87,7 @@ sequenceDiagram
     Note over V: emit vote, pend_prop
 
     C->>V: vote(id, Yes)
-    Note over V: Yes count ≥ threshold → auto-execute<br/>emit vote, exec_prop<br/>(plus cfg_set for Config; no extra event for Upgrade)
+    Note over V: threshold met, auto-execute<br/>emit vote, exec_prop<br/>plus cfg_set for Config, no extra event for Upgrade
     V-->>C: Proposal { status: Executed }
 ```
 
@@ -107,7 +107,7 @@ sequenceDiagram
     V-->>A: ()
 
     B->>V: vote(id, Yes)
-    Note over V: threshold met → execute<br/>authorize self with auth_entries
+    Note over V: threshold met, execute<br/>authorize self with auth_entries
     V->>T: fn(args)
     T-->>V: result
     Note over V: emit vote, exec_prop, inv_ok
