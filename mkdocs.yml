@@ -42,6 +42,11 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Dashboard:
+    - Overview: dashboard/index.md
+    - Using the Dashboard: dashboard/flows.md
+    - Buy and Cash Out: dashboard/buy-and-cash-out.md
+    - Testing Guide: dashboard/testing.md
   - Stellar/Soroban:
     - Overview: stellar/index.md
     - Tutorials:
