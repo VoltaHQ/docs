@@ -2,6 +2,10 @@
 
 Welcome to the Volta documentation.
 
+## Dashboard
+
+- **[Volta Circuit Dashboard](dashboard/index.md)** - Using the web app: environments, every flow, buying and cashing out, and a testing guide
+
 ## Integrations
 
 - **[Stellar/Soroban](stellar/index.md)** - Multi-signature governance contract integration guide
